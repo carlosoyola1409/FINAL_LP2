@@ -8,6 +8,10 @@
         <servlet-name>ControladorArea</servlet-name>
         <servlet-class>Controlador.ControladorArea</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorRol</servlet-name>
+        <servlet-class>Controlador.ControladorRol</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ControladorArea</servlet-name>
         <url-pattern>/ControladorArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorRol</servlet-name>
+        <url-pattern>/ControladorRol</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
