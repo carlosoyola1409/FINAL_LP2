@@ -1,3 +1,10 @@
+<%@page import="Modelo.Persona"%>
+<%@page import="ModeloDAO.PersonaDAO"%>
+<%@page import="Modelo.Area"%>
+<%@page import="ModeloDAO.AreaDAO"%>
+<%@page import="Modelo.Rol"%>
+<%@page import="java.util.List"%>
+<%@page import="ModeloDAO.RolDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,6 +15,14 @@
     </head>
     <body>
         <div class="container">
+            <%
+                RolDAO rolDAO = new RolDAO();
+                List<Rol> roles = rolDAO.listarrol();
+                AreaDAO areaDAO = new AreaDAO();
+                List<Area> areas = areaDAO.listararea();
+                PersonaDAO personaDAO = new PersonaDAO();
+                List<Persona> personas = personaDAO.listapersona();
+                %>
             <form name="AgregarSugerenciaForm" action="ControladorSugerencia" method="get">
                 <table  class="table">
                     <thead>
@@ -17,10 +32,6 @@
                     </thead>
                     <tbody>
                         <tbody>
-                            <tr>
-                            <td class="text-right">Idsugerencia</td>
-                            <td><input class="form-control" type="text" name="f_idsugerencia" value="" maxlength="30" size="20" /></td>
-                        </tr>
                         <tr>
                             <td class="text-right">Fecha</td>
                             <td><input class="form-control" type="text" name="f_fecha" value="" maxlength="30" size="20" /></td>
@@ -30,17 +41,42 @@
                             <td><input class="form-control" type="text" name="f_descripcion" value="" maxlength="30" size="20" /></td>
                         </tr>
                         <tr>
-                            <td class="text-right">Idpersona</td>
-                            <td><input class="form-control" type="text" name="f_idpersona" value="" maxlength="30" size="20" /></td>
+                            <td class="text-right">Persona</td>
+                            <td><select name="f_idpersona">                                
+                                               <% 
+                             for (Persona persona : personas) {
+                                    %>
+                                    <option><% persona.getNombre(); %></option>
+                                               <%
+                                  }
+                             %>         
+                             
+                             </select></td>
                         </tr>
                         
                          <tr>
-                            <td class="text-right">Idrol</td>
-                            <td><input class="form-control" type="text" name="f_idrol" value="" maxlength="30" size="20" /></td>
+                            <td class="text-right">Rol</td>
+                            <td><select name="f_idrol">                                
+                                               <% 
+                             for (Rol rol : roles) {
+                                    %>
+                                    <option><% rol.getNombre(); %></option>
+                                               <%
+                                  }
+                             %>
+                        </select></td>
                         </tr>
                         <tr>
-                            <td class="text-right">Idarea</td>
-                            <td><input class="form-control" type="text" name="f_idarea" value="" maxlength="30" size="20" /></td>
+                            <td class="text-right">Area</td>
+                            <td><select name="f_idarea">                                
+                                               <% 
+                             for (Area area : areas) {
+                                    %>
+                                    <option><% area.getNombre(); %></option>
+                                               <%
+                                  }
+                             %>
+                        </select></td>
                         </tr>
                         <tr>
                             <td colspan="2" class="text-center">

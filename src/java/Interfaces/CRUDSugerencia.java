@@ -9,4 +9,7 @@ public interface CRUDSugerencia {
     public boolean agregarsugerencia(Sugerencia sugerencia); // agregar
     public boolean editarsugerencia(Sugerencia sugerencia); // editar
     public boolean eliminarsugerencia(int idsugerencia); // eliminar
+    public String getnombrepersona(int idpersona);
+    public String getnombrearea(int idarea);
+    public String getnombrerol(int idrol);
 }

@@ -4,6 +4,15 @@
     Author     : Estrella
 --%>
 
+<%@page import="Modelo.Persona"%>
+<%@page import="ModeloDAO.PersonaDAO"%>
+<%@page import="Modelo.Area"%>
+<%@page import="ModeloDAO.AreaDAO"%>
+<%@page import="Modelo.Rol"%>
+<%@page import="ModeloDAO.RolDAO"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="Modelo.Sugerencia"%>
 <%@page import="java.util.List"%>
@@ -12,6 +21,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%!
+         String ide;
+         String consulta;
+         PreparedStatement pst;
+         ResultSet rs;
+         Connection cn;
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Listar Sugerencia</title>
         <link href="CSS/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -30,7 +46,6 @@
                         <th class="text-center">Idpersona</th>
                         <th class="text-center">Idrol</th>
                         <th class="text-center">Idarea</th>
-                        <th class="text-center">Estado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,19 +54,56 @@
                         SugerenciaDAO sugerenciaDAO = new SugerenciaDAO();
                         List<Sugerencia> sugerencias =  sugerenciaDAO.listarsugerencia();
                         Iterator<Sugerencia> iterator = sugerencias.iterator();
+                        RolDAO rolDAO = new RolDAO();
+                        List<Rol> roles = rolDAO.listarrol();
+                        
+                        AreaDAO areaDAO = new AreaDAO();
+                        List<Area> areas = areaDAO.listararea();
+                                               
+                        
+                        PersonaDAO personaDAO = new PersonaDAO();
+                        List<Persona> personas = personaDAO.listapersona();
                         Sugerencia sugerencia = null;
+                        int num=1;
                         while (iterator.hasNext()) {
                             sugerencia = iterator.next();
-
+                
 
                     %>
                     <tr>
                         <td><% out.print(sugerencia.getIdsugerencia()); %></td>
                         <td><% out.print(sugerencia.getFecha()); %></td>
                         <td><% out.print(sugerencia.getDescripcion()); %></td>
-                        <td><% out.print(sugerencia.getIdpersona()); %></td>
-                        <td><% out.print(sugerencia.getIdrol()); %></td>
-                        <td><% out.print(sugerencia.getIdarea()); %></td>
+                        <%
+                        for (Persona x : personas) {
+                               if (x.getIdpersona()==(sugerencia.getIdpersona())) {
+                                   %>
+                                   <td><% out.print(x.getNombre()); %></td>
+                                    <%
+                                   }
+                             }
+                        for (Rol x : roles) {
+                               if (x.getIdrol()==(sugerencia.getIdrol())) {
+                                   %>
+                                   <td><% out.print(x.getNombre()); %></td>
+                                    <%
+                                   }
+                             }   
+                         for (Area x : areas) {
+                               if (x.getIdarea()==(sugerencia.getIdarea())) {
+                                   %>
+                                   <td><% out.print(x.getNombre()); %></td>
+                                    <%
+                                   }
+                             }
+                        
+                         %>                         
+                        
+                       
+                        <%
+
+
+                        %>
                         <td>
                             <a class="btn btn-warning" href="ControladorSugerencia?f_accion=editarsugerencia01&f_idsugerencia=<% out.print(sugerencia.getIdsugerencia()); %>">
                                 Editar 

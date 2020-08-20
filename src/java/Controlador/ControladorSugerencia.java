@@ -60,47 +60,29 @@ public class ControladorSugerencia extends HttpServlet {
             acceso = listarsugerencia;
         }else if (s_accion.equalsIgnoreCase("agregarsugerencia01")) {
             acceso = agregarsugerencia;
-        }else if (s_accion.equalsIgnoreCase("agregarsugerencia02")) { 
-            int s_idsugerencia= Integer.valueOf(request.getParameter("f_idsugerencia"));
+        }else if(s_accion.equalsIgnoreCase("agregarsugerencia02")){
             String s_fecha = request.getParameter("f_fecha");
             String s_descripcion = request.getParameter("f_descripcion");
-            int s_idpersona = Integer.valueOf(request.getParameter("f_idpersona"));
-            int s_idrol = Integer.valueOf(request.getParameter("f_idrol"));
-            int s_idarea = Integer.valueOf(request.getParameter("f_idarea"));
-            
-            
-            
             sugerencia.setFecha(s_fecha);
             sugerencia.setDescripcion(s_descripcion);
-            sugerencia.setIdpersona(s_idpersona);
-            sugerencia.setIdrol(s_idrol);
-            sugerencia.setIdarea(s_idarea);
-            
             sugerenciaDAO.agregarsugerencia(sugerencia);
-            acceso = listarsugerencia;
             
+            acceso = listarsugerencia;
         }else if (s_accion.equalsIgnoreCase("editarsugerencia01")) {
-            request.setAttribute("f_idsugerencia", request.getParameter("f_idsugerencia"));
+            request.setAttribute("f_sugerencia", request.getParameter("f_idsugerencia"));
             acceso = editarsugerencia;
         }else if (s_accion.equalsIgnoreCase("editarsugerencia02")) {
-            
-            int s_idsugerencia= Integer.valueOf(request.getParameter("f_idsugerencia"));
+            int s_idsugerencia = Integer.valueOf(request.getParameter("f_idsugerencia"));
             String s_fecha = request.getParameter("f_fecha");
             String s_descripcion = request.getParameter("f_descripcion");
-            int s_idpersona = Integer.valueOf(request.getParameter("f_idpersona"));
-            int s_idrol = Integer.valueOf(request.getParameter("f_idrol"));
-            int s_idarea = Integer.valueOf(request.getParameter("f_idarea"));
-            
-            
-                      
+            sugerencia.setIdsugerencia(s_idsugerencia);
             sugerencia.setFecha(s_fecha);
             sugerencia.setDescripcion(s_descripcion);
-            sugerencia.setIdpersona(s_idpersona);
-            sugerencia.setIdrol(s_idrol);
-            sugerencia.setIdarea(s_idarea);
+            
             sugerenciaDAO.editarsugerencia(sugerencia);
+            
             acceso = listarsugerencia;
-        }else if (s_accion.equals("eliminarsugerencia")) {
+        }else if (s_accion.equalsIgnoreCase("eliminarsugerencia")) {
             int s_idsugerencia = Integer.valueOf(request.getParameter("f_idsugerencia"));
             sugerenciaDAO.eliminarsugerencia(s_idsugerencia);
             acceso = listarsugerencia;

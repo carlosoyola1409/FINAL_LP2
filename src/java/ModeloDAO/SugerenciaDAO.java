@@ -2,6 +2,9 @@ package ModeloDAO;
 
 import Config.bd.ConectaBd;
 import Interfaces.CRUDSugerencia;
+import Modelo.Area;
+import Modelo.Persona;
+import Modelo.Rol;
 import Modelo.Sugerencia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +18,12 @@ public class SugerenciaDAO implements CRUDSugerencia{
     PreparedStatement pst;
     ResultSet rs;
     Sugerencia m = new Sugerencia();
+    RolDAO rolDAO = new RolDAO();
+    List<Rol> roles = rolDAO.listarrol();
+    AreaDAO areaDAO = new AreaDAO();
+    List<Area> areas = areaDAO.listararea();
+    PersonaDAO personaDAO = new PersonaDAO();
+    List<Persona> personas = personaDAO.listapersona();
 
     @Override
     public List listarsugerencia() {
@@ -53,9 +62,7 @@ public class SugerenciaDAO implements CRUDSugerencia{
                m.setIdsugerencia(rs.getInt("idsugerencia"));
                 m.setFecha(rs.getString("fecha"));
                 m.setDescripcion(rs.getString("descripcion"));
-                m.setIdpersona(rs.getInt("idpersona"));
-                m.setIdrol(rs.getInt("idrol"));
-                m.setIdarea(rs.getInt("idarea"));
+                
             }
         } catch (Exception m) {
         }
@@ -65,13 +72,10 @@ public class SugerenciaDAO implements CRUDSugerencia{
 
     @Override
     public boolean agregarsugerencia(Sugerencia sugerencia) {
-        String consulta = " insert into sugerencia(idsugerencia,fecha,descripcion,idpersona, idrol,idarea)  "
+        String consulta = " insert into sugerencia(fecha,descripcion)  "
                         + " values( "
                         + "'"+ sugerencia.getFecha() +"', "
-                        + "'"+ sugerencia.getDescripcion() +"', "
-                        + "'"+ sugerencia.getIdpersona() +"', "
-                        + "'"+ sugerencia.getIdrol() +"', "
-                        + "'"+ sugerencia.getIdarea() +"') ";
+                        + "'"+ sugerencia.getDescripcion() +"') ";
         try {
             con = cn.getConnection();
             pst = con.prepareStatement(consulta);
@@ -113,5 +117,38 @@ public class SugerenciaDAO implements CRUDSugerencia{
         } catch (Exception m) {
         }
         return false;
+    }
+    @Override
+    public String getnombrepersona(int idpersona) {
+        String nombre=null;
+        for (Persona persona : personas) {
+            if (persona.getIdpersona()==idpersona) {
+                nombre = persona.getNombre();
+            }    
+        }
+        return nombre;            
+     }
+
+    @Override
+    public String getnombrerol(int idrol) {
+        String nombre=null;
+        for (Rol rol : roles) {
+            if (rol.getIdrol()==idrol) {
+                nombre = rol.getNombre();
+            }    
+        }
+        return nombre;            
+     }
+      
+    @Override
+    public String getnombrearea(int idarea) {
+    String nombre=null;
+        for (Area area : areas) {
+            if (area.getIdarea()==idarea) {
+                nombre = area.getNombre();
+            }    
+        }
+        return nombre;            
+           
     }
 }
